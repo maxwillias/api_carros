@@ -3,18 +3,27 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Carro;
+use App\Models\Car;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class CarroController extends Controller
+class CarController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except: ['index', 'show'])
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      * GET /api/cars
      */
     public function index()
     {
-        return response()->json(Carro::all());
+        return response()->json(Car::all());
     }
 
     /**
@@ -50,7 +59,7 @@ class CarroController extends Controller
             'fotos'           => 'nullable|array',
         ]);
 
-        $car = Carro::create($data);
+        $car = Car::create($data);
 
         return response()->json($car, 201);
     }
@@ -59,7 +68,7 @@ class CarroController extends Controller
      * Display the specified resource.
      * GET /api/cars/{id}
      */
-    public function show(Carro $car)
+    public function show(Car $car)
     {
         return response()->json($car);
     }
@@ -68,7 +77,7 @@ class CarroController extends Controller
      * Update the specified resource in storage.
      * PUT/PATCH /api/cars/{id}
      */
-    public function update(Request $request, Carro $car)
+    public function update(Request $request, Car $car)
     {
         $data = $request->validate([
             'type'            => 'nullable|string',
@@ -105,7 +114,7 @@ class CarroController extends Controller
      * Remove the specified resource from storage.
      * DELETE /api/cars/{id}
      */
-    public function destroy(Carro $car)
+    public function destroy(Car $car)
     {
         $car->delete();
 

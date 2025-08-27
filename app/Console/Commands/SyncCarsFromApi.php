@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Carro;
+use App\Models\Car;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -32,10 +32,10 @@ class SyncCarsFromApi extends Command
         $this->info("Baixando dados de {$url} ...");
 
         try {
-            $response = Http::timeout(30)->get($url);
+            $response = Http::retry(3, 1000)->timeout(30)->get($url);
 
             if ($response->failed()) {
-                $this->error("Falha ao acessar a API");
+                $this->error("Falha ao acessar a API após 3 tentativas");
                 return 1;
             }
 
@@ -46,7 +46,7 @@ class SyncCarsFromApi extends Command
             }
 
             foreach ($cars as $car) {
-                Carro::updateOrCreate(
+                Car::updateOrCreate(
                     ['external_id' => $car['id']],
                     [
                         'type'            => $car['type'] ?? null,

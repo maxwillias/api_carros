@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Carro extends Model
+class Car extends Model
 {
     protected $fillable = [
         'external_id',
