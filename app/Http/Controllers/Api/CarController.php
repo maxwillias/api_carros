@@ -23,7 +23,17 @@ class CarController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        return response()->json(Car::all());
+        $cars = Car::paginate(10);
+
+        return response()->json([
+            'cars' => $cars->items(),
+            'meta' => [
+            'current_page' => $cars->currentPage(),
+            'per_page'     => $cars->perPage(),
+            'total'        => $cars->total(),
+            'last_page'    => $cars->lastPage(),
+        ]
+        ]);
     }
 
     /**
