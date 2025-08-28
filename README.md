@@ -7,7 +7,7 @@ Este projeto é uma API RESTful construída em **Laravel 12** para gerenciamento
 | POST   | `/api/register`  | ❌         | Registrar um novo usuário                 |
 | POST   | `/api/login`     | ❌         | Login do usuário e geração de token       |
 | DELETE   | `/api/logout`    | ✅         | Logout do usuário (revoga token)          |
-| GET    | `/api/cars`      | ✅         | Listar todos os carros                    |
+| GET    | `/api/cars`      | ❌         | Listar todos os carros                    |
 | POST   | `/api/cars`      | ✅         | Criar um novo carro                       |
 | GET    | `/api/cars/{id}` | ❌         | Mostrar detalhes de um carro específico   |
 | PUT    | `/api/cars/{id}` | ✅         | Atualizar totalmente um carro existente   |
